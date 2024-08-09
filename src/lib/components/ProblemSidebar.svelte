@@ -16,9 +16,13 @@
     <ul>
         {#each problems as problem}
             <li class:selected={selectedProblemId === problem.id}>
-                <a href="{base}/{encodeURIComponent(grade)}/{encodeURIComponent(topicId)}/{problem.id}">
-                    {problem.title}
-                </a>
+                {#if problem.component}
+                    <a href="{base}/{encodeURIComponent(grade)}/{encodeURIComponent(topicId)}/{problem.id}">
+                        {problem.title}
+                    </a>
+                {:else}
+                    <span class="non-link">{problem.title}</span>
+                {/if}
             </li>
         {/each}
     </ul>
@@ -26,15 +30,11 @@
 
 <style>
     .problem-sidebar {
-        width: 300px;
-        height: 100vh;
+        width: 100%;
+        height: 100%;
         overflow-y: auto;
-        border-right: 1px solid #ccc;
         padding: 20px;
         box-sizing: border-box;
-        position: fixed;
-        left: 0;
-        top: 0;
         background-color: white;
         display: flex;
         flex-direction: column;
@@ -58,12 +58,14 @@
 
     .problem-sidebar h2 {
         margin-top: 0;
+        font-size: clamp(18px, 4vw, 24px);
     }
 
     .problem-sidebar ul {
         list-style-type: none;
         padding: 0;
         flex-grow: 1;
+        margin: 0;
     }
 
     .problem-sidebar li {
@@ -77,13 +79,39 @@
         background: none;
         border: none;
         cursor: pointer;
-        padding: 5px;
+        padding: 10px;
         text-decoration: none;
-        color: inherit;
+        color: #0056b3;
+        font-weight: 500;
+        transition: color 0.3s, background-color 0.3s;
+        font-size: clamp(14px, 3vw, 16px);
+    }
+
+    .problem-sidebar a:hover {
+        color: #003d82;
+        background-color: #f0f0f0;
     }
 
     .problem-sidebar li.selected a {
         font-weight: bold;
         background-color: #e6e6e6;
+        color: #003d82;
+    }
+
+    .problem-sidebar .non-link {
+        display: block;
+        width: 100%;
+        text-align: left;
+        padding: 10px;
+        color: #666;
+        font-weight: normal;
+        font-size: clamp(14px, 3vw, 16px);
+    }
+
+    @media (min-width: 768px) {
+        .problem-sidebar {
+            width: 300px;
+            border-right: 1px solid #ccc;
+        }
     }
 </style>

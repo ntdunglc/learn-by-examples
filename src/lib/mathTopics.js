@@ -1,4 +1,5 @@
-import CountingVisualization from './components/CountingVisualization.svelte';
+import CountingVisualization from './components/problems/CountingVisualization.svelte';
+import ClockMatchingProblem from '$lib/components/problems/ClockMatchingProblem.svelte';
 
 const mathTopics = [
     {
@@ -156,12 +157,30 @@ const mathTopics = [
                 id: "1-time",
                 name: "Time (hours and half-hours)",
                 problems: [
-                    { id: "1-time-1", title: "Read time to the hour on analog clocks" },
-                    { id: "1-time-2", title: "Read time to the half-hour on analog clocks" },
-                    { id: "1-time-3", title: "Draw hands on a clock to show time to the hour" },
-                    { id: "1-time-4", title: "Draw hands on a clock to show time to the half-hour" },
-                    { id: "1-time-5", title: "Match digital and analog clock times (hours)" },
-                    { id: "1-time-6", title: "Match digital and analog clock times (half-hours)" },
+                    {
+                        id: "1-time-1", title: "Read time to the hour on analog clocks",
+                        component: ClockMatchingProblem,
+                        props: {
+                            problemType: 'matchAnalogToDigital', accuracy: 'hour'
+                        }
+                    },
+                    {
+                        id: "1-time-2", title: "Read time to the half-hour on analog clocks", component: ClockMatchingProblem, props: {
+                            problemType: 'matchAnalogToDigital', accuracy: 'halfHour'
+                        }
+                    },
+                    // { id: "1-time-3", title: "Draw hands on a clock to show time to the hour" },
+                    // { id: "1-time-4", title: "Draw hands on a clock to show time to the half-hour" },
+                    {
+                        id: "1-time-5", title: "Match digital and analog clock times (hours)", component: ClockMatchingProblem, props: {
+                            problemType: 'matchDigitalToAnalog', accuracy: 'hour'
+                        }
+                    },
+                    {
+                        id: "1-time-6", title: "Match digital and analog clock times (half-hours)", component: ClockMatchingProblem, props: {
+                            problemType: 'matchDigitalToAnalog', accuracy: 'halfHour'
+                        }
+                    },
                     { id: "1-time-7", title: "Solve simple word problems involving time" },
                     { id: "1-time-8", title: "Sequence daily events by time" },
                     { id: "1-time-9", title: "Distinguish between a.m. and p.m." },
@@ -310,8 +329,16 @@ const mathTopics = [
                 id: "3-time",
                 name: "Telling Time to the Minute",
                 problems: [
-                    { id: "3-time-1", title: "Read analog clocks to the nearest minute" },
-                    { id: "3-time-2", title: "Write time using digital notation" },
+                    {
+                        id: "3-time-1", title: "Read analog clocks to the nearest minute", component: ClockMatchingProblem, props: {
+                            problemType: 'matchAnalogToDigital', accuracy: 'minute'
+                        }
+                    },
+                    {
+                        id: "3-time-2", title: "Match digital and analog clock times (minute)", component: ClockMatchingProblem, props: {
+                            problemType: 'matchDigitalToAnalog', accuracy: 'minute'
+                        }
+                    },
                     { id: "3-time-3", title: "Calculate elapsed time within an hour" },
                     { id: "3-time-4", title: "Calculate elapsed time across hours" },
                     { id: "3-time-5", title: "Solve word problems involving time intervals" },

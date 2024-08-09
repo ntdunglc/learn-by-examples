@@ -10,6 +10,7 @@
     let problems = [];
     let selectedProblem = null;
     let problemComponent;
+    let isSidebarOpen = false;
 
     $: {
         const gradeData = mathTopics.find(g => g.grade === grade);
@@ -20,7 +21,7 @@
                 selectedProblem = problems.find(p => p.id === problemId);
             }
         }
-
+        isSidebarOpen = false;
     }
 
     function generateNewProblem() {
@@ -28,10 +29,20 @@
             problemComponent.generateNewProblem();
         }
     }
+
+    function toggleSidebar() {
+        isSidebarOpen = !isSidebarOpen;
+    }
 </script>
 
-<div class="topic-view">
-    <ProblemSidebar {grade} {topicId} {topic} {problems} selectedProblemId={problemId} />
+<div class="problem-view">
+    <button class="sidebar-toggle" on:click={toggleSidebar}>
+        {isSidebarOpen ? '✖' : '☰'}
+    </button>
+
+    <aside class="sidebar" class:open={isSidebarOpen}>
+        <ProblemSidebar {grade} {topicId} {topic} {problems} selectedProblemId={problemId} />
+    </aside>
 
     <main class="problem-area">
         {#if selectedProblem}
@@ -61,51 +72,79 @@
 </div>
 
 <style>
-    .topic-view {
+    .problem-view {
         display: flex;
-        height: 100vh;
+        flex-direction: column;
+        min-height: 100%;
+        position: relative;
+    }
+
+    .sidebar {
+        position: fixed;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background-color: #f8f8f8;
+        transition: left 0.3s ease-in-out;
+        z-index: 1000;
+        overflow-y: auto;
+    }
+
+    .sidebar.open {
+        left: 0;
+    }
+
+    .sidebar-toggle {
+        top: 10px;
+        left: 10px;
+        z-index: 1001;
+        background-color: #ff9800;
+        border: none;
+        color: white;
+        padding: 10px;
+        font-size: 20px;
+        cursor: pointer;
+        border-radius: 5px;
     }
 
     .problem-area {
         flex-grow: 1;
-        margin-left: 300px;
         display: flex;
         flex-direction: column;
-        height: 100vh;
+        padding-top: 5px;
     }
 
     .problem-header {
         display: flex;
         justify-content: space-between;
         align-items: center;
-        padding: 20px;
+        padding: 10px 20px;
         background-color: #f0f0f0;
         border-bottom: 1px solid #ccc;
-        position: sticky;
-        top: 0;
-        z-index: 10;
+        z-index: 999;
     }
 
     .problem-header h1 {
         margin: 0;
-        font-size: 24px;
+        font-size: clamp(18px, 4vw, 24px);
     }
 
     .problem-content {
         flex-grow: 1;
-        overflow-y: auto;
         padding: 20px;
+        overflow-y: auto;
     }
 
     .new-problem-button {
         background-color: #ff9800;
         border: none;
         color: white;
-        padding: 10px 20px;
+        padding: 8px 16px;
         text-align: center;
         text-decoration: none;
         display: inline-block;
-        font-size: 16px;
+        font-size: clamp(14px, 3vw, 16px);
         margin: 4px 2px;
         cursor: pointer;
         border-radius: 12px;
@@ -119,5 +158,25 @@
 
     .new-problem-button:active {
         transform: scale(0.95);
+    }
+
+    @media (min-width: 768px) {
+        .problem-view {
+            flex-direction: row;
+        }
+
+        .sidebar {
+            position: static;
+            width: 300px;
+            height: 100%;
+        }
+
+        .sidebar-toggle {
+            display: none;
+        }
+
+        .problem-area {
+            padding-top: 0;
+        }
     }
 </style>
