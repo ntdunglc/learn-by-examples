@@ -1,5 +1,6 @@
-import CountingVisualization from './components/problems/CountingVisualization.svelte';
+import CountingVisualization from '$lib/components/problems/CountingVisualization.svelte';
 import ClockMatchingProblem from '$lib/components/problems/ClockMatchingProblem.svelte';
+import MultiplicationGrid from '$lib/components/problems/MultiplicationGrid.svelte';
 
 const mathTopics = [
     {
@@ -281,7 +282,33 @@ const mathTopics = [
                 id: "3-multiplication-division",
                 name: "Multiplication and Division",
                 problems: [
-                    { id: "3-multDiv-1", title: "Multiply single-digit numbers" },
+                    {
+                        id: "3-mult-2", title: "Multiply with number 2", component: MultiplicationGrid, props: { "maxFactor": 10, firstFactor: 2 }
+                    },
+                    {
+                        id: "3-mult-3", title: "Multiply with number 3", component: MultiplicationGrid, props: { "maxFactor": 10, firstFactor: 3 }
+                    },
+                    {
+                        id: "3-mult-4", title: "Multiply with number 4", component: MultiplicationGrid, props: { "maxFactor": 10, firstFactor: 4 }
+                    },
+                    {
+                        id: "3-mult-5", title: "Multiply with number 5", component: MultiplicationGrid, props: { "maxFactor": 10, firstFactor: 5 }
+                    },
+                    {
+                        id: "3-mult-6", title: "Multiply with number 6", component: MultiplicationGrid, props: { "maxFactor": 10, firstFactor: 6 }
+                    },
+                    {
+                        id: "3-mult-7", title: "Multiply with number 7", component: MultiplicationGrid, props: { "maxFactor": 10, firstFactor: 7 }
+                    },
+                    {
+                        id: "3-mult-8", title: "Multiply with number 8", component: MultiplicationGrid, props: { "maxFactor": 10, firstFactor: 8 }
+                    },
+                    {
+                        id: "3-mult-9", title: "Multiply with number 9", component: MultiplicationGrid, props: { "maxFactor": 10, firstFactor: 9 }
+                    },
+                    {
+                        id: "3-mult-singledigit", title: "Multiply single-digit numbers", component: MultiplicationGrid, props: { "maxFactor": 10 }
+                    },
                     { id: "3-multDiv-2", title: "Divide single-digit numbers" },
                     { id: "3-multDiv-3", title: "Multiply by multiples of 10" },
                     { id: "3-multDiv-4", title: "Use the distributive property" },
