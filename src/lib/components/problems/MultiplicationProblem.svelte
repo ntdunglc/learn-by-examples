@@ -1,6 +1,7 @@
 <script>
 	import { onMount } from 'svelte';
 	import { fade, fly } from 'svelte/transition';
+	import MultiplicationGrid from '../shared/MultiplicationGrid.svelte';
 
 	export let maxFactor = 10;
 	export let firstFactor = null;
@@ -10,11 +11,28 @@
 	let selectedAnswer = null;
 	let message = '';
 	let showMessage = false;
+	let previousProblem = { factor1: null, factor2: null };
+
+	function getRandomFactor(max) {
+		const rand = Math.random();
+		if (rand < 0.05) return 1; // 5% chance for 1
+		if (rand > 0.95) return 10; // 5% chance for 10 (when max is 10)
+		// Remaining 90% distributed among 2-9
+		return Math.floor(rand * 8) + 2;
+	}
 
 	export function generateNewProblem() {
-		factor1 = firstFactor !== null ? firstFactor : Math.floor(Math.random() * maxFactor) + 1;
-		factor2 = Math.floor(Math.random() * maxFactor) + 1;
+		let newFactor1, newFactor2;
+		do {
+			newFactor1 = firstFactor !== null ? firstFactor : getRandomFactor(maxFactor);
+			newFactor2 = getRandomFactor(maxFactor);
+		} while (newFactor1 === previousProblem.factor1 && newFactor2 === previousProblem.factor2);
+
+		factor1 = newFactor1;
+		factor2 = newFactor2;
 		correctAnswer = factor1 * factor2;
+		previousProblem = { factor1, factor2 };
+
 		generateOptions();
 		selectedAnswer = null;
 		showMessage = false;
@@ -23,7 +41,7 @@
 	function generateOptions() {
 		const optionSet = new Set([correctAnswer, factor1 + factor2]);
 		while (optionSet.size < 6) {
-			const randomFactor = Math.floor(Math.random() * maxFactor) + 1;
+			const randomFactor = getRandomFactor(maxFactor);
 			const randomOption = randomFactor * (Math.random() < 0.5 ? factor1 : factor2);
 			if (randomOption !== correctAnswer) {
 				optionSet.add(randomOption);
@@ -42,12 +60,6 @@
 		}
 	}
 
-	function createGrid(rows, cols) {
-		return Array(rows)
-			.fill()
-			.map(() => Array(cols).fill(0));
-	}
-
 	onMount(generateNewProblem);
 </script>
 
@@ -60,25 +72,21 @@
 
 	<div class="visualization">
 		<div class="factor factor1">
-			{#each Array(factor1) as _}
-				<div class="square"></div>
-			{/each}
+			<MultiplicationGrid rows={1} cols={factor1} />
 		</div>
 		<div class="multiply">x</div>
 		<div class="factor factor2">
-			{#each Array(factor2) as _}
-				<div class="square"></div>
-			{/each}
+			<MultiplicationGrid rows={factor2} cols={1} />
 		</div>
 		<div class="equals">=</div>
 		<div class="product">
-			{#each createGrid(factor2, factor1) as row}
-				<div class="row">
-					{#each row as _}
-						<div class="square"></div>
-					{/each}
-				</div>
-			{/each}
+			<MultiplicationGrid
+				rows={factor2}
+				cols={factor1}
+				showSkipCounting={showMessage}
+				horizontalFactor={factor2}
+				verticalFactor={factor1}
+			/>
 		</div>
 	</div>
 
@@ -145,18 +153,6 @@
 		flex-direction: row;
 	}
 
-	.row {
-		display: flex;
-	}
-
-	.square {
-		width: 20px;
-		height: 20px;
-		background-color: #4caf50;
-		margin: 2px;
-		border-radius: 3px;
-	}
-
 	.multiply,
 	.equals {
 		font-size: 24px;
@@ -166,6 +162,7 @@
 	.options {
 		display: flex;
 		justify-content: center;
+		flex-wrap: wrap;
 		gap: 10px;
 		margin-top: 20px;
 	}
