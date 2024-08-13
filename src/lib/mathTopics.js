@@ -1,6 +1,8 @@
 import CountingVisualization from '$lib/components/problems/CountingVisualization.svelte';
 import ClockMatchingProblem from '$lib/components/problems/ClockMatchingProblem.svelte';
 import MultiplicationProblem from '$lib/components/problems/MultiplicationProblem.svelte';
+import DivisionProblem from '$lib/components/problems//DivisionProblem.svelte';
+
 
 const mathTopics = [
     {
@@ -279,8 +281,8 @@ const mathTopics = [
         grade: "3rd Grade",
         topics: [
             {
-                id: "3-multiplication-division",
-                name: "Multiplication and Division",
+                id: "3-multiplication",
+                name: "Multiplication",
                 problems: [
                     {
                         id: "3-mult-2", title: "Multiply with number 2", component: MultiplicationProblem, props: { "maxFactor": 10, firstFactor: 2 }
@@ -309,15 +311,29 @@ const mathTopics = [
                     {
                         id: "3-mult-singledigit", title: "Multiply single-digit numbers", component: MultiplicationProblem, props: { "maxFactor": 10 }
                     },
-                    { id: "3-multDiv-2", title: "Divide single-digit numbers" },
-                    { id: "3-multDiv-3", title: "Multiply by multiples of 10" },
-                    { id: "3-multDiv-4", title: "Use the distributive property" },
-                    { id: "3-multDiv-5", title: "Solve word problems involving multiplication" },
-                    { id: "3-multDiv-6", title: "Solve word problems involving division" },
-                    { id: "3-multDiv-7", title: "Understand the relationship between multiplication and division" },
-                    { id: "3-multDiv-8", title: "Use arrays to model multiplication and division" },
-                    { id: "3-multDiv-9", title: "Find missing factors in multiplication equations" },
-                    { id: "3-multDiv-10", title: "Divide with remainders" }
+                ]
+            },
+            {
+                id: "3-division",
+                name: "Division",
+                problems: [
+                    { id: "3-div-2", title: "Divide with number 2", component: DivisionProblem, props: { "fixedDivisor": 2 } },
+                    { id: "3-div-3", title: "Divide with number 3", component: DivisionProblem, props: { "fixedDivisor": 3 } },
+                    { id: "3-div-4", title: "Divide with number 4", component: DivisionProblem, props: { "fixedDivisor": 4 } },
+                    { id: "3-div-5", title: "Divide with number 5", component: DivisionProblem, props: { "fixedDivisor": 5 } },
+                    { id: "3-div-6", title: "Divide with number 6", component: DivisionProblem, props: { "fixedDivisor": 6 } },
+                    { id: "3-div-7", title: "Divide with number 7", component: DivisionProblem, props: { "fixedDivisor": 7 } },
+                    { id: "3-div-8", title: "Divide with number 8", component: DivisionProblem, props: { "fixedDivisor": 8 } },
+                    { id: "3-div-9", title: "Divide with number 9", component: DivisionProblem, props: { "fixedDivisor": 9 } },
+                    { id: "3-div-singledigit", title: "Divide single-digit numbers", component: DivisionProblem, props: {} },
+            // { id: "3-multDiv-3", title: "Multiply by multiples of 10" },
+            // { id: "3-multDiv-4", title: "Use the distributive property" },
+            // { id: "3-multDiv-5", title: "Solve word problems involving multiplication" },
+            // { id: "3-multDiv-6", title: "Solve word problems involving division" },
+            // { id: "3-multDiv-7", title: "Understand the relationship between multiplication and division" },
+            // { id: "3-multDiv-8", title: "Use arrays to model multiplication and division" },
+            // { id: "3-multDiv-9", title: "Find missing factors in multiplication equations" },
+            // { id: "3-multDiv-10", title: "Divide with remainders" }
                 ]
             },
             {

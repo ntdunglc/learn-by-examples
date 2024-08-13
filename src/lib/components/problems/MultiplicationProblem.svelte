@@ -64,7 +64,7 @@
 </script>
 
 <div class="multiplication-container">
-	<h2>Multiplication Problem</h2>
+	<h2>Find the multiplication of two numbers:</h2>
 
 	<div class="problem">
 		<span>{factor1} x {factor2} = ?</span>
