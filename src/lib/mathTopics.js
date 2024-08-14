@@ -2,7 +2,7 @@ import CountingVisualization from '$lib/components/problems/CountingVisualizatio
 import ClockMatchingProblem from '$lib/components/problems/ClockMatchingProblem.svelte';
 import MultiplicationProblem from '$lib/components/problems/MultiplicationProblem.svelte';
 import DivisionProblem from '$lib/components/problems//DivisionProblem.svelte';
-
+import SubtractionProblem from '$lib/components/problems//SubtractionProblem.svelte';
 
 const mathTopics = [
     {
@@ -75,8 +75,8 @@ const mathTopics = [
                 id: "k-subtraction",
                 name: "Simple Subtraction (up to 5)",
                 problems: [
-                    { id: "k-sub-1", title: "Subtract from 3" },
-                    { id: "k-sub-2", title: "Subtract from 5" },
+                    { id: "k-sub-1", title: "Subtract from 3", component: SubtractionProblem, props: { "maxNumber": 3 } },
+                    { id: "k-sub-2", title: "Subtract from 5", component: SubtractionProblem, props: { "maxNumber": 5 } },
                     { id: "k-sub-3", title: "Complete subtraction sentences (e.g., 5 - __ = 3)" },
                     { id: "k-sub-4", title: "Subtract zero from a number" },
                     { id: "k-sub-5", title: "Visualize subtraction with objects" },
@@ -98,8 +98,8 @@ const mathTopics = [
                 problems: [
                     { id: "1-addSub-1", title: "Add numbers with sum up to 10" },
                     { id: "1-addSub-2", title: "Add numbers with sum up to 20" },
-                    { id: "1-addSub-3", title: "Subtract from numbers up to 10" },
-                    { id: "1-addSub-4", title: "Subtract from numbers up to 20" },
+                    { id: "1-addSub-3", title: "Subtract from numbers up to 10", component: SubtractionProblem, props: { "maxNumber": 10 } },
+                    { id: "1-addSub-4", title: "Subtract from numbers up to 20", component: SubtractionProblem, props: { "maxNumber": 20 } },
                     { id: "1-addSub-5", title: "Complete number sentences (e.g., 7 + __ = 12)" },
                     { id: "1-addSub-6", title: "Word problems with addition and subtraction" },
                     { id: "1-addSub-7", title: "Find pairs of numbers that add up to 10" },
@@ -197,18 +197,18 @@ const mathTopics = [
         topics: [
             {
                 id: "2-addition-subtraction",
-                name: "Addition and Subtraction (up to 100)",
+                name: "Addition and Subtraction",
                 problems: [
                     { id: "2-addSub-1", title: "Add two-digit numbers without regrouping" },
                     { id: "2-addSub-2", title: "Add two-digit numbers with regrouping" },
-                    { id: "2-addSub-3", title: "Subtract two-digit numbers without regrouping" },
-                    { id: "2-addSub-4", title: "Subtract two-digit numbers with regrouping" },
-                    { id: "2-addSub-5", title: "Solve word problems involving addition up to 100" },
-                    { id: "2-addSub-6", title: "Solve word problems involving subtraction up to 100" },
-                    { id: "2-addSub-7", title: "Use mental math strategies for addition" },
-                    { id: "2-addSub-8", title: "Use mental math strategies for subtraction" },
-                    { id: "2-addSub-9", title: "Add three two-digit numbers" },
-                    { id: "2-addSub-10", title: "Find missing addends in equations (e.g., 45 + __ = 72)" }
+                    { id: "2-addSub-3", title: "Subtract two-digit numbers without regrouping", component: SubtractionProblem, props: { "maxNumber": 99, "regrouping": false } },
+                    { id: "2-addSub-4", title: "Subtract two-digit numbers with regrouping", component: SubtractionProblem, props: { "maxNumber": 99 } },
+                    { id: "2-addSub-5", title: "Subtract three-digit numbers without regrouping", component: SubtractionProblem, props: { "maxNumber": 999, "minNumber": 100, "regrouping": false } },
+                    { id: "2-addSub-6", title: "Subtract three-digit numbers with regrouping", component: SubtractionProblem, props: { "maxNumber": 999, "minNumber": 100 } },
+                    { id: "2-addSub-8", title: "Use mental math strategies for addition" },
+                    { id: "2-addSub-9", title: "Use mental math strategies for subtraction" },
+                    { id: "2-addSub-10", title: "Add three two-digit numbers" },
+                    { id: "2-addSub-11", title: "Find missing addends in equations (e.g., 45 + __ = 72)" }
                 ]
             },
             {
@@ -326,14 +326,16 @@ const mathTopics = [
                     { id: "3-div-8", title: "Divide with number 8", component: DivisionProblem, props: { "fixedDivisor": 8 } },
                     { id: "3-div-9", title: "Divide with number 9", component: DivisionProblem, props: { "fixedDivisor": 9 } },
                     { id: "3-div-singledigit", title: "Divide single-digit numbers", component: DivisionProblem, props: {} },
-            // { id: "3-multDiv-3", title: "Multiply by multiples of 10" },
-            // { id: "3-multDiv-4", title: "Use the distributive property" },
-            // { id: "3-multDiv-5", title: "Solve word problems involving multiplication" },
-            // { id: "3-multDiv-6", title: "Solve word problems involving division" },
-            // { id: "3-multDiv-7", title: "Understand the relationship between multiplication and division" },
-            // { id: "3-multDiv-8", title: "Use arrays to model multiplication and division" },
-            // { id: "3-multDiv-9", title: "Find missing factors in multiplication equations" },
-            // { id: "3-multDiv-10", title: "Divide with remainders" }
+                    { id: "3-div-remainder", title: "Divide with remainer", component: DivisionProblem, props: { "allowRemainder": true } },
+
+                    // { id: "3-multDiv-3", title: "Multiply by multiples of 10" },
+                    // { id: "3-multDiv-4", title: "Use the distributive property" },
+                    // { id: "3-multDiv-5", title: "Solve word problems involving multiplication" },
+                    // { id: "3-multDiv-6", title: "Solve word problems involving division" },
+                    // { id: "3-multDiv-7", title: "Understand the relationship between multiplication and division" },
+                    // { id: "3-multDiv-8", title: "Use arrays to model multiplication and division" },
+                    // { id: "3-multDiv-9", title: "Find missing factors in multiplication equations" },
+                    // { id: "3-multDiv-10", title: "Divide with remainders" }
                 ]
             },
             {

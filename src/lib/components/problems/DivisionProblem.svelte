@@ -13,6 +13,7 @@
 	let dividend, divisor, correctAnswer, remainder;
 	let options = [];
 	let selectedAnswer = null;
+	let title = '';
 	let message = '';
 	let showMessage = false;
 	let showAnswer = false;
@@ -53,6 +54,14 @@
 		return { newDivisor, newCorrectAnswer, newRemainder };
 	}
 
+    function getTitle() {
+        if (allowRemainder) {
+            return `How many ${itemEmoji} in each group? There might be some left over!`;
+        } else {
+            return `Choose the number of ${itemEmoji} after dividing into equal groups:`;
+        }
+    }
+
 	export function generateNewProblem() {
 		const { newDivisor, newCorrectAnswer, newRemainder } = generateUniqueParameters();
 
@@ -69,6 +78,7 @@
 		showMessage = false;
 		showAnswer = false;
 		itemEmoji = getItemEmoji();
+		title = getTitle();
 
 		dividendItems = Array.from({ length: dividend }, (_, index) => ({
 			id: index,
@@ -145,7 +155,7 @@
 </script>
 
 <div class="division-container">
-	<h2>Choose the number of {itemEmoji} after dividing into equal groups:</h2>
+	<h2>{title}</h2>
 
 	<div class="problem">
 		<span>{dividend} ÷ {divisor} = ?</span>
@@ -161,10 +171,10 @@
 				{/each}
 			</div>
 			{#if showMessage}
-				<div class="message" transition:fade>
+				<div class="message">
 					{message}
 				</div>
-				<button class="next-problem" on:click={generateNewProblem} transition:fade>
+				<button class="next-problem" on:click={generateNewProblem}>
 					Next Problem
 				</button>
 			{/if}

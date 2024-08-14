@@ -10,36 +10,60 @@
   let problems = [];
 
   $: {
-      const gradeData = mathTopics.find(g => g.grade === grade);
-      if (gradeData) {
-          topic = gradeData.topics.find(t => t.id === topicId);
-          if (topic) {
-              problems = topic.problems;
-          }
+    const gradeData = mathTopics.find(g => g.grade === grade);
+    if (gradeData) {
+      topic = gradeData.topics.find(t => t.id === topicId);
+      if (topic) {
+        problems = topic.problems;
       }
-  };
+    }
+  }
 </script>
 
 <div class="topic-view">
-  <ProblemSidebar {grade} {topicId} {topic} {problems} />
+  <aside class="sidebar">
+    <ProblemSidebar {grade} {topicId} {topic} {problems} />
+  </aside>
 
   <main class="problem-area">
-      <p>Select a problem to begin.</p>
+    <p>Select a problem to begin.</p>
   </main>
 </div>
 
 <style>
   .topic-view {
-      display: flex;
-      height: 100vh;
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+  }
+
+  .sidebar {
+    width: 100%;
+    height: 100%;
+    background-color: #f8f8f8;
+    overflow-y: auto;
   }
 
   .problem-area {
-      flex-grow: 1;
-      margin-left: 300px;
+    display: none;
+    flex-grow: 1;
+    padding: 20px;
+  }
+
+  @media (min-width: 768px) {
+    .topic-view {
+      flex-direction: row;
+    }
+
+    .sidebar {
+      width: 300px;
+      height: 100vh;
+    }
+
+    .problem-area {
       display: flex;
       flex-direction: column;
-      height: 100vh;
-      padding: 20px;
+      margin-left: 300px;
+    }
   }
 </style>
